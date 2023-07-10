@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>圈圈叉叉小遊戲</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <section class="page home">
+      <img src="/images/5xruby.svg" alt="五倍紅寶石LOGO" class="logo" />
+      <div class="outer-border">
+        <table>
+          <tr>
+            <td>
+              <img src="/images/x.svg" alt="叉叉" class="x" />
+            </td>
+            <td>
+              <img src="/images/o.svg" alt="圈圈" class="o" />
+            </td>
+            <td>
+              <img src="/images/x.svg" alt="叉叉" class="x" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="/images/o.svg" alt="圈圈" class="o" />
+            </td>
+            <td>
+              <img src="/images/x.svg" alt="叉叉" class="x" />
+            </td>
+            <td>
+              <img src="/images/o.svg" alt="圈圈" class="o" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="/images/x.svg" alt="叉叉" class="x" />
+            </td>
+            <td>
+              <img src="/images/o.svg" alt="圈圈" class="o" />
+            </td>
+            <td>
+              <img src="/images/x.svg" alt="叉叉" class="x" />
+            </td>
+          </tr>
+        </table>
+      </div>
+      <button class="start-button">START</button>
+    </section>
+    <section class="page game">
+      <img src="/images/5xruby.svg" alt="五倍紅寶石LOGO" class="logo" />
+      <div class="scoreboard">
+        <div class="team noughts">
+          <img
+            src="/images/person.svg"
+            alt="人icon"
+            class="person"
+            width="90"
+            height="90"
+          />
+          <div class="outer-img">
+            <img
+              src="/images/o.svg"
+              alt="圈圈"
+              class="o"
+              width="44"
+              height="44"
+            />
+          </div>
+          <p class="score noughts">0</p>
+        </div>
+        <div class="team crosses">
+          <p class="score crosses">0</p>
+          <div class="outer-img">
+            <img
+              src="/images/x.svg"
+              alt="叉叉"
+              class="x"
+              width="44"
+              height="44"
+            />
+          </div>
+          <img
+            src="/images/person.svg"
+            alt="人icon"
+            class="person"
+            width="90"
+            height="90"
+          />
+        </div>
+      </div>
+      <div class="outer-border">
+        <table class="game-table">
+          <tr>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+          </tr>
+          <tr>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+          </tr>
+          <tr>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+            <td onclick="makeMove(this)" class="lattice"></td>
+          </tr>
+        </table>
+        <div class="game-result">
+          <img src="/images/o_winner.svg" alt="" />
+        </div>
+      </div>
+      <button class="restart-button">RESTART</button>
+    </section>
+  </body>
+</html>

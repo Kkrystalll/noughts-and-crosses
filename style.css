@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #dbcae0;
+}
+
+table {
+  width: 582px;
+  height: 582px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+tr:nth-child(even) td:nth-child(odd),
+tr:nth-child(odd) td:nth-child(even) {
+  background-color: white;
+}
+
+td {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  background-color: #e6dae9;
+}
+
+button {
+  background-color: #6b21a8;
+  color: white;
+  border: 0;
+  padding: 10px 42px;
+  border-radius: 45px;
+  font-size: 24px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 100vh;
+}
+
+.logo {
+  margin-left: -490px;
+  width: 135px;
+  height: 22px;
+}
+
+.outer-border {
+  border: 10px solid white;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.game {
+  display: none;
+}
+
+.scoreboard {
+  display: flex;
+  width: 622px;
+  justify-content: space-between;
+}
+
+.team {
+  display: flex;
+  border: 8px solid white;
+  justify-content: center;
+  align-items: center;
+}
+
+.team.noughts {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.team.crosses {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.outer-img {
+  background-color: white;
+  padding: 24px;
+}
+
+.score {
+  width: 90px;
+  height: 90px;
+  font-size: 64px;
+  color: white;
+  text-align: center;
+}
+
+.game-result {
+  display: none;
+  background-color: #e6dae9;
+  border-radius: 20px;
+  padding: 80px;
+}
