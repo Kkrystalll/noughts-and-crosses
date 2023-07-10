@@ -20,9 +20,7 @@ startButton.addEventListener("click", function () {
 });
 
 function makeMove(lattice) {
-  if (gameOver) return;
-
-  if (lattice.textContent === "") {
+  if (lattice.innerHTML === "") {
     var symbol =
       currentPlayer === "X"
         ? '<img src="/images/x.svg" alt="叉叉" class="x" />'
@@ -36,19 +34,19 @@ function makeMove(lattice) {
 
 function checkWin() {
   var lattices = document.querySelectorAll(".lattice");
-  var winningCombinations = [
+  var winSet = [
     [0, 1, 2],
     [3, 4, 5],
-    [6, 7, 8], // 水平
+    [6, 7, 8],
     [0, 3, 6],
     [1, 4, 7],
-    [2, 5, 8], // 垂直
+    [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6], // 对角线
+    [2, 4, 6],
   ];
 
-  for (var i = 0; i < winningCombinations.length; i++) {
-    var [a, b, c] = winningCombinations[i];
+  for (var i = 0; i < winSet.length; i++) {
+    var [a, b, c] = winSet[i];
 
     if (
       lattices[a].innerHTML &&
