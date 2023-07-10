@@ -65,7 +65,7 @@ button {
   display: none;
 }
 
-.scoreboard {
+.container {
   display: flex;
   width: 622px;
   justify-content: space-between;

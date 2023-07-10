@@ -2,11 +2,17 @@ const startButton = document.querySelector(".start-button");
 const homePage = document.querySelector(".page.home");
 const gamePage = document.querySelector(".page.game");
 const restartButton = document.querySelector(".restart-button");
+const rescoreButton = document.querySelector(".rescore-button");
 const gameTable = document.querySelector(".game-table");
 const gameResult = document.querySelector(".game-result");
+const scoreCrosses = document.querySelector(".score.crosses");
+const scoreNoughts = document.querySelector(".score.noughts");
 
 var currentPlayer = "X";
 var gameOver = false;
+
+scoreNoughts.textContent = localStorage.getItem("score noughts") || "0";
+scoreCrosses.textContent = localStorage.getItem("score crosses") || "0";
 
 startButton.addEventListener("click", function () {
   homePage.style.display = "none";
@@ -29,9 +35,7 @@ function makeMove(lattice) {
 }
 
 function checkWin() {
-  var cells = document.querySelectorAll(".lattice");
-  // // TODO del
-  // console.log(cells);
+  var lattices = document.querySelectorAll(".lattice");
   var winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -45,31 +49,45 @@ function checkWin() {
 
   for (var i = 0; i < winningCombinations.length; i++) {
     var [a, b, c] = winningCombinations[i];
-    // // TODO del
-    // console.log(a, b, c, winningCombinations[i]);
 
     if (
-      cells[a].innerHTML &&
-      cells[a].innerHTML === cells[b].innerHTML &&
-      cells[a].innerHTML === cells[c].innerHTML
+      lattices[a].innerHTML &&
+      lattices[a].innerHTML === lattices[b].innerHTML &&
+      lattices[a].innerHTML === lattices[c].innerHTML
     ) {
-      var winnerImage = `<img src="/images/${cells[a].firstChild.className}_winner.svg" alt="${cells[a].firstChild.className} 獲勝" width="422" height="422" />`;
-
-      gameResult.innerHTML = winnerImage;
-      gameTable.style.display = "none";
-      gameResult.style.display = "block";
-
-      gameOver = true;
+      handleWin(lattices[a]);
       break;
     }
   }
 }
 
+function handleWin(winningCell) {
+  var winnerImage = `<img src="/images/${winningCell.firstChild.className}_winner.svg" alt="${winningCell.firstChild.className} 獲勝" width="422" height="422" />`;
+
+  gameResult.innerHTML = winnerImage;
+  gameTable.style.display = "none";
+  gameResult.style.display = "block";
+  gameOver = true;
+
+  if (winningCell.firstChild.className === "o") {
+    updateScore(scoreNoughts);
+  } else if (winningCell.firstChild.className === "x") {
+    updateScore(scoreCrosses);
+  }
+}
+
+function updateScore(scoreElement) {
+  var currentScore = parseInt(scoreElement.textContent);
+  var updatedScore = currentScore + 1;
+  scoreElement.textContent = updatedScore;
+  localStorage.setItem(scoreElement.className, updatedScore);
+}
+
 function checkDraw() {
-  var cells = document.querySelectorAll(".lattice");
+  var lattices = document.querySelectorAll(".lattice");
   var isDraw = true;
 
-  cells.forEach(function (cell) {
+  lattices.forEach(function (cell) {
     if (!cell.firstChild) {
       isDraw = false;
     }
@@ -85,12 +103,26 @@ function checkDraw() {
   }
 }
 
+function clearBoard() {
+  var lattices = document.querySelectorAll(".lattice");
+  lattices.forEach(function (cell) {
+    cell.innerHTML = "";
+  });
+}
+
 restartButton.addEventListener("click", function () {
-  // currentPlayer = "X";
-  // gameOver = false;
-  // randomNumber = getRandomNumber(0, 100);
-  // guessNumber.value = "";
-  // hint.textContent = "";
-  // currentMinNumber.textContent = "0";
-  // currentMaxNumber.textContent = "100";
+  clearBoard();
+  gameOver = false;
+  gameResult.removeAttribute("style");
+  gameTable.removeAttribute("style");
+});
+
+rescoreButton.addEventListener("click", function () {
+  clearBoard();
+  gameOver = false;
+  gameResult.removeAttribute("style");
+  gameTable.removeAttribute("style");
+  scoreCrosses.textContent = "0";
+  scoreNoughts.textContent = "0";
+  localStorage.clear();
 });
