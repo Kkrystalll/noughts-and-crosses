@@ -8,11 +8,11 @@ const gameResult = document.querySelector(".game-result");
 const scoreCrosses = document.querySelector(".score.crosses");
 const scoreNoughts = document.querySelector(".score.noughts");
 
-var currentPlayer = "X";
-var gameOver = false;
+let currentPlayer = "X";
+let gameOver = false;
 
-scoreNoughts.textContent = localStorage.getItem("score noughts") || "0";
 scoreCrosses.textContent = localStorage.getItem("score crosses") || "0";
+scoreNoughts.textContent = localStorage.getItem("score noughts") || "0";
 
 startButton.addEventListener("click", function () {
   homePage.style.display = "none";
@@ -21,20 +21,20 @@ startButton.addEventListener("click", function () {
 
 function makeMove(lattice) {
   if (lattice.innerHTML === "") {
-    var symbol =
+    let symbol =
       currentPlayer === "X"
         ? '<img src="/images/x.svg" alt="叉叉" class="x" />'
         : '<img src="/images/o.svg" alt="圈圈" class="o" />';
     lattice.innerHTML = symbol;
     checkWin();
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
     checkDraw();
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
   }
 }
 
 function checkWin() {
-  var lattices = document.querySelectorAll(".lattice");
-  var winSet = [
+  const lattices = document.querySelectorAll(".lattice");
+  let winSet = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -45,9 +45,8 @@ function checkWin() {
     [2, 4, 6],
   ];
 
-  for (var i = 0; i < winSet.length; i++) {
-    var [a, b, c] = winSet[i];
-
+  for (let i = 0; i < winSet.length; i++) {
+    const [a, b, c] = winSet[i];
     if (
       lattices[a].innerHTML &&
       lattices[a].innerHTML === lattices[b].innerHTML &&
@@ -59,68 +58,77 @@ function checkWin() {
   }
 }
 
-function handleWin(winningCell) {
-  var winnerImage = `<img src="/images/${winningCell.firstChild.className}_winner.svg" alt="${winningCell.firstChild.className} 獲勝" width="422" height="422" />`;
-
+function handleWin(winner) {
+  const winnerImage = `<img
+  src="/images/${winner.firstChild.className}_winner.svg"
+  alt="${winner.firstChild.className} 獲勝"
+  width="422"
+  height="422"
+  />`;
   gameResult.innerHTML = winnerImage;
-  gameTable.style.display = "none";
   gameResult.style.display = "block";
+  gameTable.style.display = "none";
   gameOver = true;
 
-  if (winningCell.firstChild.className === "o") {
-    updateScore(scoreNoughts);
-  } else if (winningCell.firstChild.className === "x") {
+  if (winner.firstChild.className === "x") {
     updateScore(scoreCrosses);
+  } else if (winner.firstChild.className === "o") {
+    updateScore(scoreNoughts);
   }
 }
 
 function updateScore(scoreElement) {
-  var currentScore = parseInt(scoreElement.textContent);
-  var updatedScore = currentScore + 1;
+  let currentScore = parseInt(scoreElement.textContent);
+  let updatedScore = currentScore + 1;
   scoreElement.textContent = updatedScore;
   localStorage.setItem(scoreElement.className, updatedScore);
 }
 
 function checkDraw() {
-  var lattices = document.querySelectorAll(".lattice");
-  var isDraw = true;
+  const lattices = document.querySelectorAll(".lattice");
+  let isDraw = true;
 
-  lattices.forEach(function (cell) {
-    if (!cell.firstChild) {
+  lattices.forEach(function (lattice) {
+    if (!lattice.firstChild) {
       isDraw = false;
     }
   });
 
   if (isDraw && !gameOver) {
-    gameResult.innerHTML =
-      '<img src="/images/draw.svg" alt="平手" width="422" height="422" />';
-    gameTable.style.display = "none";
+    const drawImage = `<img
+    src="/images/draw.svg"
+    alt="平手"
+    width="422"
+    height="422"
+    />`;
+    gameResult.innerHTML = drawImage;
     gameResult.style.display = "block";
-
+    gameTable.style.display = "none";
     gameOver = true;
   }
 }
 
-function clearBoard() {
-  var lattices = document.querySelectorAll(".lattice");
-  lattices.forEach(function (cell) {
-    cell.innerHTML = "";
-  });
-}
-
 restartButton.addEventListener("click", function () {
-  clearBoard();
+  clearTable();
   gameOver = false;
   gameResult.removeAttribute("style");
   gameTable.removeAttribute("style");
 });
 
+function clearTable() {
+  const lattices = document.querySelectorAll(".lattice");
+
+  lattices.forEach(function (lattice) {
+    lattice.innerHTML = "";
+  });
+}
+
 rescoreButton.addEventListener("click", function () {
-  clearBoard();
+  clearTable();
   gameOver = false;
   gameResult.removeAttribute("style");
   gameTable.removeAttribute("style");
+  localStorage.clear();
   scoreCrosses.textContent = "0";
   scoreNoughts.textContent = "0";
-  localStorage.clear();
 });
